@@ -32,7 +32,7 @@ class UserController extends Controller
                 'message' => 'Usuario no existente',
                 'usuario' => $usuario,
                 'status' => 'error'
-            ), 200);
+            ), 300);
         }
     }
 
@@ -79,7 +79,31 @@ class UserController extends Controller
     }
 
     public function destroy($id, Request $request){
-    	
+    	//identificar usuario
+        //validar que tenga permiso para realizar esta petición
+        
+        $usuario = User::find($id);
+        //comprobar que exista
+        if(is_object($usuario)){
+            //borrarlo
+            $usuario->delete();
+
+            //devolverlo
+            $data = array(
+                'usuario' => $usuario,
+                'status' => 'success',
+                'code' => 200,
+            );
+        }else{
+            //devolverlo
+            $data = array(
+                'message' => 'El usuario no existe',
+                'status' => 'error',
+                'code' => 300,
+            );
+        }
+          
+        return response()->json($data, 200);
     }
 
     public function login(Request $request){
