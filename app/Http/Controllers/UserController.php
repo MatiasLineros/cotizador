@@ -9,7 +9,7 @@ class UserController extends Controller
 {
    	public function index(){
     	
-    	$usuarios = User::all()->load('rol');
+    	$usuarios = User::join('roles', 'roles.id', '=', 'users.role_id')->get(['users.id', 'name', 'email', 'nombre']);
 
     	return response()->json(array(
    			'usuarios' => $usuarios,
