@@ -32,6 +32,12 @@ insert into users (name, email, password, role_id) values('Orlando', 'o@o.cl',
 insert into users (name, email, password, role_id) values('Matias', 'm@m.cl', 
 	'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', '1');
 
+insert into users (name, email, password, role_id) values('Juan', 'j@j.cl', 
+	'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', '1');
+
+insert into users (name, email, password, role_id) values('Gasparin', 'g@g.cl', 
+	'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', '2');
+
 CREATE TABLE rollers(
 	id 		int(255) auto_increment not null,
 	tipo 	varchar(255),

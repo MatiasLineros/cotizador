@@ -37,7 +37,41 @@ class UserController extends Controller
     }
 
     public function store(Request $request){
+        //recoger datos por post
+        $json = $request->input('json', null); //guarda json q viene por request
+        $params = json_decode($json); //guarda parametros
+        $params_array = json_decode($json, true); //guarda parametros en array
+        
+        //identificar usuario
+        //validar que tenga permiso para realizar esta petición
 
+        //validacion
+        $validate = \Validator::make($params_array, [ //validator es eficaz para la validacion en una api
+            'name' => 'required',
+            'email' => 'required|unique:users',
+            'password' => 'required',
+            'role_id' => 'required|numeric|exists:roles,id',
+        ]);
+        
+        if($validate->fails()){
+            return response()->json($validate->errors(), 400);
+        }
+
+        //guardar usuario
+        $usuario = new User();
+        $usuario->name = $params->name;
+        $usuario->email = $params->email;
+        $usuario->password = hash('sha256', $params->password);
+        $usuario->role_id = $params->role_id;
+        $usuario->save();
+
+        $data = array(
+            'usuario' => $usuario,
+            'status' => 'success',
+            'code' => 200,
+        );
+
+        return response()->json($data, 200);
     }
 
     public function update($id, Request $request){
