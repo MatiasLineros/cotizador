@@ -36,6 +36,19 @@ class UserController extends Controller
         }
     }
 
+    public function create(){
+
+        //identificar si el usuario existe y si tiene permiso
+
+        //datos para cargar el formulario
+        $roles = Rol::all();
+
+        return response()->json(array(
+            'roles' => $roles,
+            'status' => 'success'
+        ), 200);        
+    }
+
     public function store(Request $request){
         //recoger datos por post
         $json = $request->input('json', null); //guarda json q viene por request
@@ -75,8 +88,66 @@ class UserController extends Controller
         return response()->json($data, 200);
     }
 
-    public function update($id, Request $request){
+    public function edit($id){
+        //identificar si el usuario existe y si tiene permiso
 
+        //datos para cargar el formulario
+        $roles = Rol::all();
+        $usuario = User::find($id)->load('rol');
+
+        return response()->json(array(
+            'roles' => $roles,
+            'usuario' => $usuario,
+            'status' => 'success'
+        ), 200);   
+    }
+
+    public function update($id, Request $request){
+        
+        //identificar si el usuario existe y si tiene permiso
+
+        $usuario = User::find($id);
+
+        if(!is_object($usuario)){
+            return response()->json(array(
+                'message' => 'Usuario no existente',
+                'status' => 'error'
+            ), 300);
+        }
+
+        $json = $request->input('json', null);
+        $params = json_decode($json);
+        $params_array = json_decode($json, true);
+
+        //validacion
+        $validate = \Validator::make($params_array, [ //validator es eficaz para la validacion en una api
+            'name' => 'required',
+            'email' => [
+                        'required',
+                        Rule::unique('users')->ignore($usuario->id),
+                       ],
+            'password' => 'required',
+            'role_id' => 'required|numeric|exists:roles,id',
+        ]);
+        
+        if($validate->fails()){
+            return response()->json($validate->errors(), 400);
+        }
+
+        $usuario->name = $params->name;
+        $usuario->email = $params->email;
+        $usuario->password = hash('sha256', $params->password);
+        $usuario->role_id = $params->role_id;
+        $usuario->estado = $params->estado;
+        $usuario->update();
+
+        $data = array(
+            'usuario' => $usuario,
+            'status' => 'success',
+            'code' => 200,
+        );
+
+        return response()->json($data, 200);
     }
 
     public function destroy($id, Request $request){
