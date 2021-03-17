@@ -63,6 +63,7 @@ class UserController extends Controller
         $usuario->email = $params->email;
         $usuario->password = hash('sha256', $params->password);
         $usuario->role_id = $params->role_id;
+        $usuario->estado = 'Activo';
         $usuario->save();
 
         $data = array(
@@ -86,7 +87,8 @@ class UserController extends Controller
         //comprobar que exista
         if(is_object($usuario)){
             //borrarlo
-            $usuario->delete();
+            $usuario->estado = 'Inactivo';
+            $usuario->update();
 
             //devolverlo
             $data = array(
