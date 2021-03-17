@@ -9,7 +9,7 @@ class UserController extends Controller
 {
    	public function index(){
     	
-    	$usuarios = User::join('roles', 'roles.id', '=', 'users.role_id')->get(['users.id', 'name', 'email', 'nombre']);
+    	$usuarios = User::join('roles', 'roles.id', '=', 'users.role_id')->where('users.estado', 'Activo')->get(['users.id', 'name', 'email', 'nombre']);
 
     	return response()->json(array(
    			'usuarios' => $usuarios,
@@ -121,11 +121,13 @@ class UserController extends Controller
 
         if(!is_null($email) && !is_null($password)){
         	$usuario = User::where('email', $email)->where('password', $pwd)->first();
-        	if(is_object($usuario)){
-        		$signup = array('status' => 'success', 'message' => 'Usuario identificado correctamente');
-        	}else{
-        		$signup = array('status' => 'error', 'message' => 'email/contraseña no corresponden');
-        	}
+        	if(is_object($usuario) && ($usuario->estado == 'Activo')){
+                $signup = array('status' => 'success', 'message' => 'Usuario identificado correctamente');
+            }elseif (is_object($usuario) && ($usuario->estado != 'Activo')) {
+                $signup = array('status' => 'error', 'message' => 'Usuario desvinculado del sistema');
+            }else{
+                $signup = array('status' => 'error', 'message' => 'email/contraseña no corresponden');
+            }
         }else{
             $signup = array('status' => 'error', 'message' => 'Datos insuficientes para logear al usuario');
         }
