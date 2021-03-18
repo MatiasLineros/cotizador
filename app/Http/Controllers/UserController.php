@@ -100,13 +100,20 @@ class UserController extends Controller
 
         //datos para cargar el formulario
         $roles = Rol::all();
-        $usuario = User::find($id)->load('rol');
+        $usuario = User::join('roles', 'roles.id', '=', 'users.role_id')->where('users.id', $id)->get(['users.id', 'name', 'email', 'nombre', 'estado', 'role_id', 'nombre']);
 
-        return response()->json(array(
-            'roles' => $roles,
-            'usuario' => $usuario,
-            'status' => 'success'
-        ), 200);   
+        if(!$usuario->isEmpty()){
+            return response()->json(array(
+                'roles' => $roles,
+                'usuario' => $usuario,
+                'status' => 'success'
+            ), 200);  
+        }else{
+            return response()->json(array(
+                'message' => 'Usuario no existe',
+                'status' => 'error'
+            ), 300);  
+        }  
     }
 
     public function update($id, Request $request){
