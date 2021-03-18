@@ -139,7 +139,6 @@ class UserController extends Controller
                         'required',
                         Rule::unique('users')->ignore($usuario->id),
                        ],
-            'password' => 'required',
             'role_id' => 'required|numeric|exists:roles,id',
             'estado' => 'required',
         ]);
