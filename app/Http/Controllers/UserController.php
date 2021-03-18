@@ -21,10 +21,9 @@ class UserController extends Controller
 
     public function show($id){
 
-        $usuario = User::find($id);
+        $usuario = User::join('roles', 'roles.id', '=', 'users.role_id')->where('users.id', $id)->get(['users.id', 'name', 'email', 'nombre', 'estado', 'role_id', 'nombre']);
         
-        if(is_object($usuario)){
-            $usuario = User::find($id)->load('rol');
+        if(!$usuario->isEmpty()){
             return response()->json(array(
                 'usuario' => $usuario,
                 'status' => 'success'
