@@ -135,15 +135,23 @@ class UserController extends Controller
                        ],
             'password' => 'required',
             'role_id' => 'required|numeric|exists:roles,id',
+            'estado' => 'required',
         ]);
         
         if($validate->fails()){
-            return response()->json($validate->errors(), 400);
+            $errores = $validate->errors();
+
+            return response()->json(array(
+                'errores' => $errores,
+                'status' => 'error'
+            ), 200);  
         }
 
         $usuario->name = $params->name;
         $usuario->email = $params->email;
-        $usuario->password = hash('sha256', $params->password);
+        if(isset($params->password)){
+            $usuario->password = hash('sha256', $params->password);
+        }
         $usuario->role_id = $params->role_id;
         $usuario->estado = $params->estado;
         $usuario->update();
