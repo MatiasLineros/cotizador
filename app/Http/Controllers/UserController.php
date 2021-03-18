@@ -99,12 +99,12 @@ class UserController extends Controller
         //identificar si el usuario existe y si tiene permiso
 
         //datos para cargar el formulario
-        $roles = Rol::all();
+        //$roles = Rol::all();
         $usuario = User::join('roles', 'roles.id', '=', 'users.role_id')->where('users.id', $id)->get(['users.id', 'name', 'email', 'nombre', 'estado', 'role_id', 'nombre']);
 
         if(!$usuario->isEmpty()){
             return response()->json(array(
-                'roles' => $roles,
+                //'roles' => $roles,
                 'usuario' => $usuario,
                 'status' => 'success'
             ), 200);  
