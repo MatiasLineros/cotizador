@@ -69,7 +69,12 @@ class UserController extends Controller
         ]);
         
         if($validate->fails()){
-            return response()->json($validate->errors(), 400);
+            $errores = $validate->errors();
+
+            return response()->json(array(
+                'errores' => $errores,
+                'status' => 'error'
+            ), 200);  
         }
 
         //guardar usuario
