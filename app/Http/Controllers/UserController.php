@@ -151,7 +151,7 @@ class UserController extends Controller
                 'status' => 'error'
             ), 200);  
         }
-
+        return $params_array;
         $usuario->name = $params->name;
         $usuario->email = $params->email;
         //if($params->password!=null){
