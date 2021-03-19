@@ -154,9 +154,9 @@ class UserController extends Controller
 
         $usuario->name = $params->name;
         $usuario->email = $params->email;
-        if($params->password!=null){
+        //if($params->password!=null){
             $usuario->password = hash('sha256', $params->password);
-        }
+        //}
         $usuario->role_id = $params->role_id;
         $usuario->estado = $params->estado;
         $usuario->update();
