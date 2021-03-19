@@ -20,17 +20,24 @@ CREATE TABLE users(
 	password varchar(255),
 	remember_token varchar(255),
 	role_id int(255),
+	estado varchar(255),
 	created_at datetime,
 	updated_at datetime,
 	CONSTRAINT pk_usuario PRIMARY KEY(id),
 	CONSTRAINT fk_usuario_role FOREIGN KEY(role_id) REFERENCES roles(id)
 )ENGINE=InnoDb;
 
-insert into users (name, email, password, role_id) values('Orlando', 'o@o.cl', 
-	'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', '2');
+insert into users (name, email, password, role_id, estado) values('Orlando', 'o@o.cl', 
+	'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', '2', 'Activo');
 
-insert into users (name, email, password, role_id) values('Matias', 'm@m.cl', 
-	'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', '1');
+insert into users (name, email, password, role_id, estado) values('Matias', 'm@m.cl', 
+	'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', '1', 'Activo');
+
+insert into users (name, email, password, role_id, estado) values('Juan', 'j@j.cl', 
+	'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', '1', 'Activo');
+
+insert into users (name, email, password, role_id, estado) values('Gasparin', 'g@g.cl', 
+	'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', '2', 'Activo');
 
 CREATE TABLE rollers(
 	id 		int(255) auto_increment not null,
