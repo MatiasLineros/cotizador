@@ -7,6 +7,9 @@ use Illuminate\Validation\Rule;
 use App\User;
 use App\Rol;
 
+use Illuminate\Support\Facades\DB;
+use App\Helpers\JwtAuth;
+
 class UserController extends Controller
 {
    	public function index(){
@@ -200,25 +203,39 @@ class UserController extends Controller
     }
 
     public function login(Request $request){
-    	//recibir por post
+    	$jwtAuth = new JwtAuth();
+
+        //recibir por post
         $json = $request->input('json', null); //almacena lo que llega por json
         $params = json_decode($json); //almacena los parametros decodificando el json
 
         $email = (!is_null($json) && isset($params->email)) ? $params->email : null;
         $password = (!is_null($json) && isset($params->password)) ? $params->password : null;
+        //este getToken es para verificar si llega un parametro llamaso asi por json
+        $getToken = (!is_null($json) && isset($params->gettoken)) ? $params->gettoken : null;
 
         //cifrar pwd
         $pwd = hash('sha256', $password);
 
         if(!is_null($email) && !is_null($password)){
-        	$usuario = User::where('email', $email)->where('password', $pwd)->first();
-        	if(is_object($usuario) && ($usuario->estado == 'Activo')){
-                $signup = array('status' => 'success', 'message' => 'Usuario identificado correctamente');
+            $usuario = User::where('email', $email)->where('password', $pwd)->first();
+
+            if(is_object($usuario) && ($usuario->estado == 'Activo')){
+
+                if($getToken == null || $getToken == 'false'){
+                    $signup = $jwtAuth->signup($email, $pwd); //retorna jwt codificado
+                }elseif($getToken != null){ //si llega variable getToken
+                    $signup = $jwtAuth->signup($email, $pwd, $getToken); //retorna jwt decodificado
+                }else{
+                    return $signup = array('status' => 'error', 'message' => 'Login ha fallado');
+                }
+
             }elseif (is_object($usuario) && ($usuario->estado != 'Activo')) {
                 $signup = array('status' => 'error', 'message' => 'Usuario desvinculado del sistema');
             }else{
                 $signup = array('status' => 'error', 'message' => 'email/contraseña no corresponden');
             }
+
         }else{
             $signup = array('status' => 'error', 'message' => 'Datos insuficientes para logear al usuario');
         }
