@@ -151,12 +151,12 @@ class UserController extends Controller
                 'status' => 'error'
             ), 200);  
         }
-        return $params_array;
+        //return $params_array;
         $usuario->name = $params->name;
         $usuario->email = $params->email;
-        //if($params->password!=null){
+        if($params_array->password!=null){
             $usuario->password = hash('sha256', $params->password);
-        //}
+        }
         $usuario->role_id = $params->role_id;
         $usuario->estado = $params->estado;
         $usuario->update();
