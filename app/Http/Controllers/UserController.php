@@ -54,47 +54,63 @@ class UserController extends Controller
     }
 
     public function store(Request $request){
-        //recoger datos por post
-        $json = $request->input('json', null); //guarda json q viene por request
-        $params = json_decode($json); //guarda parametros
-        $params_array = json_decode($json, true); //guarda parametros en array
         
         //identificar usuario
-        //validar que tenga permiso para realizar esta petición
-
-        //validacion
-        $validate = \Validator::make($params_array, [ //validator es eficaz para la validacion en una api
-            'name' => 'required',
-            'email' => 'required|unique:users',
-            'password' => 'required',
-            'role_id' => 'required|numeric|exists:roles,id',
-        ]);
+        $hash = $request->header('Authorization', null); //guarda hash
+        $JwtAuth = new JwtAuth();
+        $usuario = $JwtAuth->checkToken($hash, true); //verificado token
         
-        if($validate->fails()){
-            $errores = $validate->errors();
+        //validar que tenga permiso para realizar esta petición
+        if($usuario && $usuario->rol->nombre == "Administrador"){ //ejecuta acciones de crear 
+            
+            //recoger datos por post
+            $json = $request->input('json', null); //guarda json q viene por request
+            $params = json_decode($json); //guarda parametros
+            $params_array = json_decode($json, true); //guarda parametros en array
+            
+            //identificar usuario
+            //validar que tenga permiso para realizar esta petición
 
+            //validacion
+            $validate = \Validator::make($params_array, [ //validator es eficaz para la validacion en una api
+                'name' => 'required',
+                'email' => 'required|unique:users',
+                'password' => 'required',
+                'role_id' => 'required|numeric|exists:roles,id',
+            ]);
+            
+            if($validate->fails()){
+                $errores = $validate->errors();
+
+                return response()->json(array(
+                    'errores' => $errores,
+                    'status' => 'error'
+                ), 200);   
+            }
+
+            //guardar usuario
+            $usuario = new User();
+            $usuario->name = $params->name;
+            $usuario->email = $params->email;
+            $usuario->password = hash('sha256', $params->password);
+            $usuario->role_id = $params->role_id;
+            $usuario->estado = 'Activo';
+            $usuario->save();
+
+            $data = array(
+                'usuario' => $usuario,
+                'status' => 'success',
+                'code' => 200,
+            );
+
+            return response()->json($data, 200);
+
+        }else{
             return response()->json(array(
-                'errores' => $errores,
+                'message' => 'No tienes acceso',
                 'status' => 'error'
-            ), 200);  
+            ), 300); 
         }
-
-        //guardar usuario
-        $usuario = new User();
-        $usuario->name = $params->name;
-        $usuario->email = $params->email;
-        $usuario->password = hash('sha256', $params->password);
-        $usuario->role_id = $params->role_id;
-        $usuario->estado = 'Activo';
-        $usuario->save();
-
-        $data = array(
-            'usuario' => $usuario,
-            'status' => 'success',
-            'code' => 200,
-        );
-
-        return response()->json($data, 200);
     }
 
     public function edit($id){

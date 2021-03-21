@@ -69,7 +69,10 @@ class JwtAuth{
 		}
 
 		if($getIdentity){ //si el getIdentity es true, para identificar al usuario
-			return $decoded; //retorna decodificado
+			if(isset($decoded)){
+				$usuario = User::where('email', $decoded->email)->first();
+				return $usuario; //retorna decodificado
+			}
 		}
 
 		return $auth; //retorna true o false
