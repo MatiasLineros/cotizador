@@ -11,7 +11,8 @@ CREATE TABLE roles(
 )ENGINE=InnoDb;
 
 insert into roles (nombre) values('Administrador');
-insert into roles (nombre) values('SuperAdministrador');
+insert into roles (nombre) values('Vendedor');
+insert into roles (nombre) values('Ejecutivo');
 
 CREATE TABLE users(
 	id 		int(255) auto_increment not null,
@@ -301,7 +302,7 @@ CREATE TABLE clientes(
 	rut 	varchar(255),
 	nombre	varchar(255),
 	apellido	varchar(255),
-	telefono	varchar(255),
+	telefono	int(15),
 	direccion varchar(255),
 	created_at datetime,
 	updated_at datetime,
