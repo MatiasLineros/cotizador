@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class RollerMedidaController extends Controller
+class CortinaPredefinidaController extends Controller
 {
     //
 }

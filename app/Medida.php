@@ -8,7 +8,7 @@ class Medida extends Model
 {
 	protected $table = 'medidas';
 
-	public function rollerMedida(){
-        return $this->hasMany('App\RollerMedida');
+	public function cortinasPredefinidas(){
+        return $this->hasMany('App\CortinaPredefinida');
     }
 }

@@ -12,11 +12,7 @@ class Roller extends Model
         return $this->hasMany('App\Tela');
     }
 
-    public function rollerColores(){
-        return $this->hasMany('App\RollerColor');
-    }
-
-    public function rollerMedidas(){
-        return $this->hasMany('App\RollerMedida');
+    public function cortinasPredefinidas(){
+        return $this->hasMany('App\CortinaPredefinida');
     }
 }

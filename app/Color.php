@@ -12,7 +12,7 @@ class Color extends Model
         return $this->hasMany('App\Cortina');
     }
 
-    public function rollerColores(){
-        return $this->hasMany('App\RollerColor');
+    public function cortinasPredefinidas(){
+        return $this->hasMany('App\CortinaPredefinida');
     }
 }

@@ -35,10 +35,7 @@ insert into users (name, email, password, role_id, estado) values('Matias', 'm@m
 	'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', '1', 'Activo');
 
 insert into users (name, email, password, role_id, estado) values('Juan', 'j@j.cl', 
-	'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', '1', 'Activo');
-
-insert into users (name, email, password, role_id, estado) values('Gasparin', 'g@g.cl', 
-	'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', '2', 'Activo');
+	'ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f', '3', 'Activo');
 
 CREATE TABLE rollers(
 	id 		int(255) auto_increment not null,
@@ -94,133 +91,6 @@ insert into medidas (alto, ancho) values(165, 240);
 insert into medidas (alto, ancho) values(180, 240);
 insert into medidas (alto, ancho) values(200, 240);
 
-CREATE TABLE rollers_medidas(
-	id 		int(255) auto_increment not null,
-	roller_id 	int(255),
-	medida_id 	int(255),
-	precio 		int(255),
-	created_at datetime,
-	updated_at datetime,
-	CONSTRAINT pk_roller_medida PRIMARY KEY(id),
-	CONSTRAINT fk_roller_medida_roller FOREIGN KEY(roller_id) REFERENCES rollers(id),
-	CONSTRAINT fk_roller_medida_medida FOREIGN KEY(medida_id) REFERENCES medidas(id)
-)ENGINE=InnoDb;
-
-/*Blackout*/
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 1, 6770);
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 2, 7750);
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 3, 8770);
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 4, 9770);
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 5, 10640);
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 6, 11600);
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 7, 12750);
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 8, 13750);
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 9, 15080);
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 10, 7810);
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 11, 9040);
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 12, 10210);
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 13, 11430);
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 14, 12500);
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 15, 13710);
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 16, 15020);
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 17, 16230);
-insert into rollers_medidas (roller_id, medida_id, precio) values(1, 18, 17850);
-/*Lino blackout*/
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 1, 9710);
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 2, 11290);
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 3, 12820);
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 4, 14360);
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 5, 15900);
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 6, 17420);
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 7, 18990);
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 8, 21360);
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 9, 23570);
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 10, 11260);
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 11, 13140);
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 12, 15000);
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 13, 16840);
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 14, 18690);
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 15, 20520);
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 16, 22420);
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 17, 31420);
-insert into rollers_medidas (roller_id, medida_id, precio) values(2, 18, 31890);
-/*translucida*/
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 1, 5040);
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 2, 5660);
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 3, 6270);
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 4, 6940);
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 5, 7430);
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 6, 8030);
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 7, 8810);
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 8, 9460);
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 9, 10310);
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 10, 5740);
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 11, 6490);
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 12, 7280);
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 13, 8060);
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 14, 8700);
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 15, 9460);
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 16, 10360);
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 17, 11130);
-insert into rollers_medidas (roller_id, medida_id, precio) values(3, 18, 12150);
-/*Lino translucida*/
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 1, 6730);
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 2, 7690);
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 3, 8620);
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 4, 9560);
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 5, 10470);
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 6, 11400);
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 7, 12390);
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 8, 14150);
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 9, 15550);
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 10, 8090);
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 11, 9350);
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 12, 10570);
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 13, 11780);
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 14, 13000);
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 15, 14210);
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 16, 15460);
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 17, 21300);
-insert into rollers_medidas (roller_id, medida_id, precio) values(4, 18, 21780);
-/*Screen*/
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 1, 8600);
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 2, 9960);
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 3, 11340);
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 4, 12740);
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 5, 14010);
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 6, 15370);
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 7, 16870);
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 8, 18270);
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 9, 20120);
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 10, 10360);
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 11, 12080);
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 12, 13820);
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 13, 15550);
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 14, 17180);
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 15, 18880);
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 16, 20730);
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 17, 22470);
-insert into rollers_medidas (roller_id, medida_id, precio) values(5, 18, 24790);
-/*Duo*/
-insert into rollers_medidas (roller_id, medida_id, precio) values(6, 19, 15730);
-insert into rollers_medidas (roller_id, medida_id, precio) values(6, 20, 18480);
-insert into rollers_medidas (roller_id, medida_id, precio) values(6, 21, 21090);
-insert into rollers_medidas (roller_id, medida_id, precio) values(6, 22, 23900);
-insert into rollers_medidas (roller_id, medida_id, precio) values(6, 23, 26520);
-insert into rollers_medidas (roller_id, medida_id, precio) values(6, 24, 29700);
-insert into rollers_medidas (roller_id, medida_id, precio) values(6, 25, 32390);
-insert into rollers_medidas (roller_id, medida_id, precio) values(6, 26, 35080);
-insert into rollers_medidas (roller_id, medida_id, precio) values(6, 27, 38870);
-/*Duo Sun Out*/
-insert into rollers_medidas (roller_id, medida_id, precio) values(7, 19, 22930);
-insert into rollers_medidas (roller_id, medida_id, precio) values(7, 20, 27390);
-insert into rollers_medidas (roller_id, medida_id, precio) values(7, 21, 31520);
-insert into rollers_medidas (roller_id, medida_id, precio) values(7, 22, 35680);
-insert into rollers_medidas (roller_id, medida_id, precio) values(7, 23, 40050);
-insert into rollers_medidas (roller_id, medida_id, precio) values(7, 24, 44780);
-insert into rollers_medidas (roller_id, medida_id, precio) values(7, 25, 49000);
-insert into rollers_medidas (roller_id, medida_id, precio) values(7, 26, 53220);
-
 CREATE TABLE colores(
 	id 		int(255) auto_increment not null,
 	color 	varchar(255),
@@ -241,6 +111,279 @@ insert into colores (color) values('color 9');
 insert into colores (color) values('color 10');
 insert into colores (color) values('color 11');
 
+CREATE TABLE cortinas_predefinidas(
+	id 		int(255) auto_increment not null,
+	roller_id 	int(255),
+	medida_id 	int(255),
+	color_id    int(255),
+	precio 		int(255),
+	created_at datetime,
+	updated_at datetime,
+	CONSTRAINT pk_cortinas_predefinidas PRIMARY KEY(id),
+	CONSTRAINT fk_cortinas_predefinidas_roller FOREIGN KEY(roller_id) REFERENCES rollers(id),
+	CONSTRAINT fk_cortinas_predefinidas_medida FOREIGN KEY(medida_id) REFERENCES medidas(id),
+	CONSTRAINT fk_cortinas_predefinidas_color FOREIGN KEY(color_id) REFERENCES colores(id)
+)ENGINE=InnoDb;
+
+/*Blackout*/
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 1, 1, 6770);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 1, 3, 6770);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 2, 1, 7750);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 2, 5, 7750);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 3, 1, 8770);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 3, 2, 8770);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 4, 1, 9770);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 4, 7, 9770);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 5, 1, 10640);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 5, 2, 10640);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 6, 1, 11600);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 6, 9, 11600);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 7, 1, 12750);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 7, 3, 12750);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 8, 1, 13750);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 8, 4, 13750);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 9, 1, 15080);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 9, 5, 15080);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 10, 1, 7810);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 10, 6, 7810);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 11, 1, 9040);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 11, 3, 9040);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 12, 1, 10210);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 12, 6, 10210);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 13, 1, 11430);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 13, 2, 11430);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 14, 1, 12500);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 14, 7, 12500);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 15, 1, 13710);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 15, 10, 13710);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 16, 1, 15020);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 16, 2, 15020);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 17, 1, 16230);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 17, 5, 16230);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 18, 1, 17850);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(1, 18, 9, 17850);
+
+/*Lino blackout*/
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 1, 1, 9710);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 1, 3, 9710);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 2, 1, 11290);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 2, 4, 11290);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 3, 1, 12820);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 3, 5, 12820);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 4, 1, 14360);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 4, 6, 14360);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 5, 1, 15900);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 5, 3, 15900);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 6, 1, 17420);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 6, 9, 17420);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 7, 1, 18990);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 7, 5, 18990);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 8, 1, 21360);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 8, 5, 21360);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 9, 1, 23570);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 9, 4, 23570);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 10, 1, 11260);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 10, 4, 11260);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 11, 1, 13140);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 11, 3, 13140);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 12, 1, 15000);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 12, 3, 15000);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 13, 1, 16840);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 13, 2, 16840);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 14, 1, 18690);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 14, 7, 18690);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 15, 1, 20520);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 15, 7, 20520);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 16, 1, 22420);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 16, 5, 22420);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 17, 1, 31420);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 17, 4, 31420);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 18, 1, 31890);
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(2, 18, 11, 31890);
+
+/*translucida*/
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 1, 1, 5040);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 2, 1, 5660);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 3, 1, 6270);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 4, 1, 6940);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 5, 1, 7430);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 6, 1, 8030);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 7, 1, 8810);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 8, 1, 9460);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 9, 1, 10310);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 10, 1, 5740);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 11, 1, 6490);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 12, 1, 7280);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 13, 1, 8060);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 14, 1, 8700);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 15, 1, 9460);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 16, 1, 10360);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 17, 1, 11130);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(3, 18, 1, 12150);
+
+/*Lino translucida*/
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 1, 1, 6730);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 2, 1, 7690);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 3, 1, 8620);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 4, 1, 9560);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 5, 1, 10470);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 6, 1, 11400);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 7, 1, 12390);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 8, 1, 14150);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 9, 1, 15550);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 10, 1, 8090);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 11, 1, 9350);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 12, 1, 10570);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 13, 1, 11780);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 14, 1, 13000);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 15, 1, 14210);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 16, 1, 15460);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 17, 1, 21300);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(4, 18, 1, 21780);
+
+/*Screen*/
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 1, 1, 8600);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 2, 1, 9960);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 3, 1, 11340);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 4, 1, 12740);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 5, 1, 14010);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 6, 1, 15370);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 7, 1, 16870);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 8, 1, 18270);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 9, 1, 20120);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 10, 1, 10360);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 11, 1, 12080);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 12, 1, 13820);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 13, 1, 15550);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 14, 1, 17180);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 15, 1, 18880);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 16, 1, 20730);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 17, 1, 22470);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(5, 18, 1, 24790);
+
+/*Duo*/
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(6, 19, 1, 15730);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(6, 20, 1, 18480);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(6, 21, 1, 21090);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(6, 22, 1, 23900);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(6, 23, 1, 26520);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(6, 24, 1, 29700);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(6, 25, 1, 32390);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(6, 26, 1, 35080);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(6, 27, 1, 38870);
+
+/*Duo Sun Out*/
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(7, 19, 1, 22930);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(7, 20, 1, 27390);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(7, 21, 1, 31520);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(7, 22, 1, 35680);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(7, 23, 1, 40050);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(7, 24, 1, 44780);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(7, 25, 1, 49000);
+
+insert into cortinas_predefinidas (roller_id, medida_id, color_id, precio) values(7, 26, 1, 53220);
+
+
+/*
 CREATE TABLE rollers_colores(
 	id 		int(255) auto_increment not null,
 	roller_id 	int(255),
@@ -253,6 +396,7 @@ CREATE TABLE rollers_colores(
 )ENGINE=InnoDb;
 
 /*Agregar rollers_colores*/
+
 
 CREATE TABLE telas(
 	id 		int(255) auto_increment not null,
@@ -302,7 +446,7 @@ CREATE TABLE clientes(
 	rut 	varchar(255),
 	nombre	varchar(255),
 	apellido	varchar(255),
-	telefono	int(15),
+	telefono	int(255),
 	direccion varchar(255),
 	created_at datetime,
 	updated_at datetime,
@@ -338,12 +482,10 @@ CREATE TABLE cotizaciones_especificas(
 
 CREATE TABLE cotizaciones_a_medida(
 	id	int(255) auto_increment not null, 
-	roller_medida_id int(255),
-	roller_color_id int(255),
+	cortina_predefinida_id int(255),
 	created_at datetime,
 	updated_at datetime,
 	CONSTRAINT pk_cotizacion_a_medida PRIMARY KEY(id),
 	CONSTRAINT fk_cotizacion_a_medida_cotizacion FOREIGN KEY(id) REFERENCES cotizaciones(id),
-	CONSTRAINT fk_cotizacion_a_medida_roller_medida FOREIGN KEY(roller_medida_id) REFERENCES rollers_colores(id),
-	CONSTRAINT fk_cotizacion_a_medida_roller_color FOREIGN KEY(roller_color_id) REFERENCES rollers_colores(id)
+	CONSTRAINT fk_cotizacion_a_medida_cortina_predefinida FOREIGN KEY(cortina_predefinida_id) REFERENCES cortinas_predefinidas(id)
 )ENGINE=InnoDb;

@@ -12,11 +12,7 @@ class CotizacionMedida extends Model
         return $this->hasOne('App\Cotizacion', 'id'); 
     }
 
-    public function rollerColor(){
-        return $this->belongsTo('App\RollerColor', 'roller_color_id');
-    }
-
-    public function rollerMedida(){
-        return $this->belongsTo('App\RollerMedida', 'roller_medida_id');
+    public function cortinaPredefinida(){
+        return $this->belongsTo('App\CortinaPredefinida', 'cortina_predefinida_id');
     }
 }
