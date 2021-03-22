@@ -12,7 +12,7 @@ use App\Helpers\JwtAuth;
 
 class UserController extends Controller
 {
-   	public function index(){
+   	public function index(Request $request){
         
         //identificar usuario
         $hash = $request->header('Authorization', null); //guarda hash
@@ -56,7 +56,7 @@ class UserController extends Controller
         }
     }
 
-    public function create(){
+    public function create(Request $request){
 
         //identificar usuario
         $hash = $request->header('Authorization', null); //guarda hash
