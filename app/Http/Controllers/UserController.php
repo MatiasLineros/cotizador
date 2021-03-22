@@ -191,31 +191,42 @@ class UserController extends Controller
 
     public function destroy($id, Request $request){
     	//identificar usuario
-        //validar que tenga permiso para realizar esta petición
+        $hash = $request->header('Authorization', null); //guarda hash
+        $JwtAuth = new JwtAuth();
+        $usuario = $JwtAuth->checkToken($hash, true); //verificado token
         
-        $usuario = User::find($id);
-        //comprobar que exista
-        if(is_object($usuario)){
-            //borrarlo
-            $usuario->estado = 'Inactivo';
-            $usuario->update();
+        //validar que tenga permiso para realizar esta petición
+        if($usuario && $usuario->rol->nombre == "Administrador"){ //ejecuta acciones de crear 
+        
+            $usuario = User::find($id);
+            //comprobar que exista
+            if(is_object($usuario)){
+                //borrarlo
+                $usuario->estado = 'Inactivo';
+                $usuario->update();
 
-            //devolverlo
-            $data = array(
-                'usuario' => $usuario,
-                'status' => 'success',
-                'code' => 200,
-            );
+                //devolverlo
+                $data = array(
+                    'usuario' => $usuario,
+                    'status' => 'success',
+                    'code' => 200,
+                );
+            }else{
+                //devolverlo
+                $data = array(
+                    'message' => 'El usuario no existe',
+                    'status' => 'error',
+                    'code' => 300,
+                );
+            } 
+            return response()->json($data, 200);
+            
         }else{
-            //devolverlo
-            $data = array(
-                'message' => 'El usuario no existe',
-                'status' => 'error',
-                'code' => 300,
-            );
+            return response()->json(array(
+                'message' => 'No tienes acceso',
+                'status' => 'error'
+            ), 300); 
         }
-          
-        return response()->json($data, 200);
     }
 
     public function login(Request $request){
