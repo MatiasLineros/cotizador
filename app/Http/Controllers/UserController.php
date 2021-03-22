@@ -13,13 +13,29 @@ use App\Helpers\JwtAuth;
 class UserController extends Controller
 {
    	public function index(){
-    	
-    	$usuarios = User::join('roles', 'roles.id', '=', 'users.role_id')->where('users.estado', 'Activo')->get(['users.id', 'name', 'email', 'nombre']);
+        
+        //identificar usuario
+        $hash = $request->header('Authorization', null); //guarda hash
+        $JwtAuth = new JwtAuth();
+        $usuario = $JwtAuth->checkToken($hash, true); //verificado token
+        
+        //validar que tenga permiso para realizar esta petición
+        if($usuario && $usuario->rol->nombre == "Administrador"){ //ejecuta acciones de crear 
 
-    	return response()->json(array(
-   			'usuarios' => $usuarios,
-    		'status' => 'success'
-   		), 200);
+            //$usuarios = User::all()->load('rol');
+            $usuarios = User::join('roles', 'roles.id', '=', 'users.role_id')->where('users.estado', 'Activo')->get(['users.id', 'name', 'email', 'nombre']);
+
+            return response()->json(array(
+                'usuarios' => $usuarios,
+                'status' => 'success'
+            ), 200);
+
+        }else{
+            return response()->json(array(
+                'message' => 'No tienes acceso',
+                'status' => 'error'
+            ), 300); 
+        }
     }
 
     public function show($id){
@@ -42,15 +58,27 @@ class UserController extends Controller
 
     public function create(){
 
-        //identificar si el usuario existe y si tiene permiso
+        //identificar usuario
+        $hash = $request->header('Authorization', null); //guarda hash
+        $JwtAuth = new JwtAuth();
+        $usuario = $JwtAuth->checkToken($hash, true); //verificado token
+        
+        //validar que tenga permiso para realizar esta petición
+        if($usuario && $usuario->rol->nombre == "Administrador"){ //ejecuta acciones de crear 
 
-        //datos para cargar el formulario
-        $roles = Rol::all();
+            //datos para cargar el formulario
+            $roles = Rol::all();
+            return response()->json(array(
+                'roles' => $roles,
+                'status' => 'success'
+            ), 200); 
 
-        return response()->json(array(
-            'roles' => $roles,
-            'status' => 'success'
-        ), 200);        
+        }else{
+            return response()->json(array(
+                'message' => 'No tienes acceso',
+                'status' => 'error'
+            ), 300); 
+        }       
     }
 
     public function store(Request $request){
