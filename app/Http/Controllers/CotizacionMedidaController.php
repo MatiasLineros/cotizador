@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Roller;
+use App\CortinaPredefinida;
 
 class CotizacionMedidaController extends Controller
 {
@@ -13,8 +14,11 @@ class CotizacionMedidaController extends Controller
                          ->groupBy('rollers.id', 'rollers.tipo')
 						 ->get(['rollers.id', 'rollers.tipo']);
 
+        $cortinas_predefinidas = CortinaPredefinida::all();
+
         return response()->json(array(
             'rollers' => $rollers,
+            'cortinas_predefinidas' => $cortinas_predefinidas,
             'status' => 'success'
         ), 200);
         
