@@ -164,57 +164,69 @@ class UserController extends Controller
 
     public function update($id, Request $request){
         
-        //identificar si el usuario existe y si tiene permiso
-
-        $usuario = User::find($id);
-
-        if(!is_object($usuario)){
-            return response()->json(array(
-                'message' => 'Usuario no existente',
-                'status' => 'error'
-            ), 300);
-        }
-
-        $json = $request->input('json', null);
-        $params = json_decode($json);
-        $params_array = json_decode($json, true);
-
-        //validacion
-        $validate = \Validator::make($params_array, [ //validator es eficaz para la validacion en una api
-            'name' => 'required',
-            'email' => [
-                        'required',
-                        Rule::unique('users')->ignore($usuario->id),
-                       ],
-            'role_id' => 'required|numeric|exists:roles,id',
-            'estado' => 'required',
-        ]);
+        //identificar usuario
+        $hash = $request->header('Authorization', null); //guarda hash
+        $JwtAuth = new JwtAuth();
+        $usuario = $JwtAuth->checkToken($hash, true); //verificado token
         
-        if($validate->fails()){
-            $errores = $validate->errors();
+        //validar que tenga permiso para realizar esta petición
+        if($usuario && $usuario->rol->nombre == "Administrador"){ //ejecuta acciones de crear 
 
+            $usuario = User::find($id);
+
+            if(!is_object($usuario)){
+                return response()->json(array(
+                    'message' => 'Usuario no existente',
+                    'status' => 'error'
+                ), 300);
+            }
+
+            $json = $request->input('json', null);
+            $params = json_decode($json);
+            $params_array = json_decode($json, true);
+
+            //validacion
+            $validate = \Validator::make($params_array, [ //validator es eficaz para la validacion en una api
+                'name' => 'required',
+                'email' => [
+                            'required',
+                            Rule::unique('users')->ignore($usuario->id),
+                           ],
+                'role_id' => 'required|numeric|exists:roles,id',
+                'estado' => 'required',
+            ]);
+            
+            if($validate->fails()){
+                $errores = $validate->errors();
+
+                return response()->json(array(
+                    'errores' => $errores,
+                    'status' => 'error'
+                ), 200);  
+            }
+            //return $params_array;
+            $usuario->name = $params->name;
+            $usuario->email = $params->email;
+            if(isset($params->password)){
+                $usuario->password = hash('sha256', $params->password);
+            }
+            $usuario->role_id = $params->role_id;
+            $usuario->estado = $params->estado;
+            $usuario->update();
+
+            $data = array(
+                'usuario' => $usuario,
+                'status' => 'success',
+                'code' => 200,
+            );
+            return response()->json($data, 200);
+        }else{
             return response()->json(array(
-                'errores' => $errores,
+                'message' => 'No tienes acceso',
                 'status' => 'error'
-            ), 200);  
+            ), 300); 
         }
-        //return $params_array;
-        $usuario->name = $params->name;
-        $usuario->email = $params->email;
-        if(isset($params->password)){
-            $usuario->password = hash('sha256', $params->password);
-        }
-        $usuario->role_id = $params->role_id;
-        $usuario->estado = $params->estado;
-        $usuario->update();
 
-        $data = array(
-            'usuario' => $usuario,
-            'status' => 'success',
-            'code' => 200,
-        );
-
-        return response()->json($data, 200);
     }
 
     public function destroy($id, Request $request){
