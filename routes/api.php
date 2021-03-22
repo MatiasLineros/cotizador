@@ -22,4 +22,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('/usuarios', 'UserController'); // php artisan route:list
 Route::resource('/clientes', 'ClienteController'); // php artisan route:list
+Route::resource('/cotizacion-medida', 'CotizacionMedidaController'); // php artisan route:list
 Route::post('/login', 'UserController@login');
