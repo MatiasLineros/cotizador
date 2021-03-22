@@ -7,6 +7,9 @@ use Illuminate\Validation\Rule;
 use App\User;
 use App\Rol;
 
+use Illuminate\Support\Facades\DB;
+use App\Helpers\JwtAuth;
+
 class UserController extends Controller
 {
    	public function index(){
@@ -51,47 +54,63 @@ class UserController extends Controller
     }
 
     public function store(Request $request){
-        //recoger datos por post
-        $json = $request->input('json', null); //guarda json q viene por request
-        $params = json_decode($json); //guarda parametros
-        $params_array = json_decode($json, true); //guarda parametros en array
         
         //identificar usuario
-        //validar que tenga permiso para realizar esta petición
-
-        //validacion
-        $validate = \Validator::make($params_array, [ //validator es eficaz para la validacion en una api
-            'name' => 'required',
-            'email' => 'required|unique:users',
-            'password' => 'required',
-            'role_id' => 'required|numeric|exists:roles,id',
-        ]);
+        $hash = $request->header('Authorization', null); //guarda hash
+        $JwtAuth = new JwtAuth();
+        $usuario = $JwtAuth->checkToken($hash, true); //verificado token
         
-        if($validate->fails()){
-            $errores = $validate->errors();
+        //validar que tenga permiso para realizar esta petición
+        if($usuario && $usuario->rol->nombre == "Administrador"){ //ejecuta acciones de crear 
+            
+            //recoger datos por post
+            $json = $request->input('json', null); //guarda json q viene por request
+            $params = json_decode($json); //guarda parametros
+            $params_array = json_decode($json, true); //guarda parametros en array
+            
+            //identificar usuario
+            //validar que tenga permiso para realizar esta petición
 
+            //validacion
+            $validate = \Validator::make($params_array, [ //validator es eficaz para la validacion en una api
+                'name' => 'required',
+                'email' => 'required|unique:users',
+                'password' => 'required',
+                'role_id' => 'required|numeric|exists:roles,id',
+            ]);
+            
+            if($validate->fails()){
+                $errores = $validate->errors();
+
+                return response()->json(array(
+                    'errores' => $errores,
+                    'status' => 'error'
+                ), 200);   
+            }
+
+            //guardar usuario
+            $usuario = new User();
+            $usuario->name = $params->name;
+            $usuario->email = $params->email;
+            $usuario->password = hash('sha256', $params->password);
+            $usuario->role_id = $params->role_id;
+            $usuario->estado = 'Activo';
+            $usuario->save();
+
+            $data = array(
+                'usuario' => $usuario,
+                'status' => 'success',
+                'code' => 200,
+            );
+
+            return response()->json($data, 200);
+
+        }else{
             return response()->json(array(
-                'errores' => $errores,
+                'message' => 'No tienes acceso',
                 'status' => 'error'
-            ), 200);  
+            ), 300); 
         }
-
-        //guardar usuario
-        $usuario = new User();
-        $usuario->name = $params->name;
-        $usuario->email = $params->email;
-        $usuario->password = hash('sha256', $params->password);
-        $usuario->role_id = $params->role_id;
-        $usuario->estado = 'Activo';
-        $usuario->save();
-
-        $data = array(
-            'usuario' => $usuario,
-            'status' => 'success',
-            'code' => 200,
-        );
-
-        return response()->json($data, 200);
     }
 
     public function edit($id){
@@ -172,53 +191,78 @@ class UserController extends Controller
 
     public function destroy($id, Request $request){
     	//identificar usuario
-        //validar que tenga permiso para realizar esta petición
+        $hash = $request->header('Authorization', null); //guarda hash
+        $JwtAuth = new JwtAuth();
+        $usuario = $JwtAuth->checkToken($hash, true); //verificado token
         
-        $usuario = User::find($id);
-        //comprobar que exista
-        if(is_object($usuario)){
-            //borrarlo
-            $usuario->estado = 'Inactivo';
-            $usuario->update();
+        //validar que tenga permiso para realizar esta petición
+        if($usuario && $usuario->rol->nombre == "Administrador"){ //ejecuta acciones de crear 
+        
+            $usuario = User::find($id);
+            //comprobar que exista
+            if(is_object($usuario)){
+                //borrarlo
+                $usuario->estado = 'Inactivo';
+                $usuario->update();
 
-            //devolverlo
-            $data = array(
-                'usuario' => $usuario,
-                'status' => 'success',
-                'code' => 200,
-            );
+                //devolverlo
+                $data = array(
+                    'usuario' => $usuario,
+                    'status' => 'success',
+                    'code' => 200,
+                );
+            }else{
+                //devolverlo
+                $data = array(
+                    'message' => 'El usuario no existe',
+                    'status' => 'error',
+                    'code' => 300,
+                );
+            } 
+            return response()->json($data, 200);
+            
         }else{
-            //devolverlo
-            $data = array(
-                'message' => 'El usuario no existe',
-                'status' => 'error',
-                'code' => 300,
-            );
+            return response()->json(array(
+                'message' => 'No tienes acceso',
+                'status' => 'error'
+            ), 300); 
         }
-          
-        return response()->json($data, 200);
     }
 
     public function login(Request $request){
-    	//recibir por post
+    	$jwtAuth = new JwtAuth();
+
+        //recibir por post
         $json = $request->input('json', null); //almacena lo que llega por json
         $params = json_decode($json); //almacena los parametros decodificando el json
 
         $email = (!is_null($json) && isset($params->email)) ? $params->email : null;
         $password = (!is_null($json) && isset($params->password)) ? $params->password : null;
+        //este getToken es para verificar si llega un parametro llamaso asi por json
+        $getToken = (!is_null($json) && isset($params->gettoken)) ? $params->gettoken : null;
 
         //cifrar pwd
         $pwd = hash('sha256', $password);
 
         if(!is_null($email) && !is_null($password)){
-        	$usuario = User::where('email', $email)->where('password', $pwd)->first();
-        	if(is_object($usuario) && ($usuario->estado == 'Activo')){
-                $signup = array('status' => 'success', 'message' => 'Usuario identificado correctamente');
+            $usuario = User::where('email', $email)->where('password', $pwd)->first();
+
+            if(is_object($usuario) && ($usuario->estado == 'Activo')){
+
+                if($getToken == null || $getToken == 'false'){
+                    $signup = $jwtAuth->signup($email, $pwd); //retorna jwt codificado
+                }elseif($getToken != null){ //si llega variable getToken
+                    $signup = $jwtAuth->signup($email, $pwd, $getToken); //retorna jwt decodificado
+                }else{
+                    return $signup = array('status' => 'error', 'message' => 'Login ha fallado');
+                }
+
             }elseif (is_object($usuario) && ($usuario->estado != 'Activo')) {
                 $signup = array('status' => 'error', 'message' => 'Usuario desvinculado del sistema');
             }else{
                 $signup = array('status' => 'error', 'message' => 'email/contraseña no corresponden');
             }
+
         }else{
             $signup = array('status' => 'error', 'message' => 'Datos insuficientes para logear al usuario');
         }

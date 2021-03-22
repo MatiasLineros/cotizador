@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Cliente;
+use App\Helpers\ChileRut;
+use App\Rules\validarRut;
 
 class ClienteController extends Controller
 {
@@ -43,10 +45,10 @@ class ClienteController extends Controller
 
         //validacion
         $validate = \Validator::make($params_array, [ //validator es eficaz para la validacion en una api
-        	'rut' => 'required',
-            'nombre' => 'required',
-            'apellido' => 'required',
-            'telefono' => 'required',
+        	'rut' => ['required', 'unique:clientes', new validarRut(new ChileRut)],
+            'nombre' => 'required|regex:/^[\pL\s]+$/u',
+            'apellido' => 'required|regex:/^[\pL\s]+$/u',
+            'telefono' => 'required|numeric',
             'direccion' => 'required',
         ]);
         
@@ -111,10 +113,10 @@ class ClienteController extends Controller
 
         //validacion
         $validate = \Validator::make($params_array, [ //validator es eficaz para la validacion en una api
-            'rut' => 'required',
-            'nombre' => 'required',
-            'apellido' => 'required',
-            'telefono' => 'required',
+            'rut' => ['required', 'unique:clientes', new validarRut(new ChileRut)],
+            'nombre' => 'required|regex:/^[\pL\s]+$/u',
+            'apellido' => 'required|regex:/^[\pL\s]+$/u',
+            'telefono' => 'required|numeric',
             'direccion' => 'required',
         ]);
         
