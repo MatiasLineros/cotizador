@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Roller;
 use App\CortinaPredefinida;
+use App\Color;
+use App\Medida;
 
 class CotizacionMedidaController extends Controller
 {
@@ -15,9 +17,13 @@ class CotizacionMedidaController extends Controller
 						 ->get(['rollers.id', 'rollers.tipo']);
 
         $cortinas_predefinidas = CortinaPredefinida::all();
+        $colores = Color::all();
+        $medidas = Medida::all();
 
         return response()->json(array(
             'rollers' => $rollers,
+            'colores' => $colores,
+            'medidas' => $medidas,
             'cortinas_predefinidas' => $cortinas_predefinidas,
             'status' => 'success'
         ), 200);
