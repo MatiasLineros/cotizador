@@ -19,7 +19,7 @@ class CotizacionController extends Controller
 
     public function show($id){
     	$cotizacion = Cotizacion::find($id);
-        if($isset($cotizacion)){
+        if(is_object($cotizacion)){
             if($cotizacion->tipo_cotizacion == "A medida"){
                 //redirigir a ruta 
                 return redirect()->route('cotizacion-medida.show', [$cotizacion->id]);
