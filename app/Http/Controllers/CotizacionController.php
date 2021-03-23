@@ -19,11 +19,18 @@ class CotizacionController extends Controller
 
     public function show($id){
     	$cotizacion = Cotizacion::find($id);
-    	if($cotizacion->tipo_cotizacion == "A medida"){
-    		//redirigir a ruta 
-    		return redirect()->route('cotizacion-medida.show', [$cotizacion->id]);
-    	}else{
-    		return 'en producción...';
-    	}
+        if($isset($cotizacion)){
+            if($cotizacion->tipo_cotizacion == "A medida"){
+                //redirigir a ruta 
+                return redirect()->route('cotizacion-medida.show', [$cotizacion->id]);
+            }else{
+                return 'en producción...';
+            }
+        }else{
+            return response()->json(array(
+                'message' => 'cotización no existe',
+                'status' => 'error'
+            ), 300);
+        }
     }
 }
