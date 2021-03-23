@@ -330,7 +330,7 @@ CREATE TABLE clientes(
 CREATE TABLE cotizaciones(
 	id	int(255) auto_increment not null, 
 	margen_ganancia int(3),
-	tipo_cotización varchar(255),
+	tipo_cotizacion varchar(255),
 	precio_total int(255),
 	cliente_id int(255),
 	usuario_id int(255),
@@ -342,7 +342,7 @@ CREATE TABLE cotizaciones(
 )ENGINE=InnoDb;
 
 CREATE TABLE cotizaciones_especificas(
-	id	int(255) auto_increment not null, 
+	id	int(255) not null, 
 	alto varchar(255),
 	ancho varchar(255),
 	precio int(255),
@@ -355,7 +355,7 @@ CREATE TABLE cotizaciones_especificas(
 )ENGINE=InnoDb;
 
 CREATE TABLE cotizaciones_a_medida(
-	id	int(255) auto_increment not null, 
+	id	int(255) not null, 
 	cortina_predefinida_id int(255),
 	color_roller_predefinido_id int(255),
 	created_at datetime,
