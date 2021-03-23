@@ -26,4 +26,5 @@ Route::resource('/rollers', 'RollerController'); // php artisan route:list
 Route::resource('/cotizacion-medida', 'CotizacionMedidaController'); // php artisan route:list
 Route::get('/cortina-predefinida-roller/{roller_id}', 'CortinaPredefinidaController@cortinasSegunRoller');
 Route::get('/precio-cortina-predefinida/{roller_id}/{medida_id}', 'CortinaPredefinidaController@precioCortina');
+Route::resource('/cotizaciones', 'CotizacionController'); // php artisan route:list
 Route::post('/login', 'UserController@login');

@@ -93,6 +93,39 @@ class CotizacionMedidaController extends Controller
                 'status' => 'error'
             ), 300); 
         }
+    }
 
-    }   
+    public function show($id){
+        $cotizacion = CotizacionMedida::
+        join('cotizaciones', 'cotizaciones.id', '=', 'cotizaciones_a_medida.id')
+        ->join('colores_rollers_predefinidos', 'colores_rollers_predefinidos.id', '=', 'cotizaciones_a_medida.color_roller_predefinido_id')
+        ->join('colores', 'colores.id', '=', 'colores_rollers_predefinidos.color_id')
+        ->join('cortinas_predefinidas', 'cortinas_predefinidas.id', '=', 'cotizaciones_a_medida.cortina_predefinida_id')
+        ->join('medidas', 'medidas.id', '=', 'cortinas_predefinidas.medida_id')
+        ->join('clientes', 'clientes.id', '=', 'cotizaciones.cliente_id')
+        ->join('users', 'users.id', '=', 'cotizaciones.usuario_id')
+        ->join('rollers', 'rollers.id', '=', 'cortinas_predefinidas.roller_id')
+        ->where('cotizaciones_a_medida.id', $id)
+        ->get([
+            'cotizaciones.id',
+            'users.email',
+            'rollers.tipo',
+            'colores.color',
+            'medidas.alto',
+            'medidas.ancho',
+            'clientes.rut',
+            'clientes.nombre',
+            'clientes.apellido',
+            'cotizaciones.tipo_cotizacion',
+            'cortinas_predefinidas.precio',
+            'cotizaciones.margen_ganancia',
+            'cotizaciones.precio_total'
+        ]);
+
+        return response()->json(array(
+            'cotizacion' => $cotizacion,
+            'status' => 'success'
+        ), 200);  
+    }
+
 }
