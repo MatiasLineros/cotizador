@@ -30,25 +30,21 @@ class CortinaPredefinidaController extends Controller
 	    }
     }
 
-	public function precioCortina(Request $request){
-    	$json = $request->input('json', null); //guarda json q viene por request
-        $params = json_decode($json); //guarda parametros
-        $params_array = json_decode($json, true); //guarda parametros en array
-
+	public function precioCortina($roller_id, $medida_id){
         
-        $cortina = CortinaPredefinida::where('roller_id', $params->roller_id)
-        							 ->where('medida_id', $params->medida_id)
-        							 ->first();
+        $cortina = CortinaPredefinida::where('roller_id', $roller_id)
+                                     ->where('medida_id', $medida_id)
+                                     ->first();
         if(is_object($cortina)){
-        	return response()->json(array(
-		        'cortina' => $cortina,
-		        'status' => 'success'
-	    	), 200);
+            return response()->json(array(
+                'cortina' => $cortina,
+                'status' => 'success'
+            ), 200);
         }else{
-        	return response()->json(array(
-		        'message' => 'Cortina predefinida no existe',
-		        'status' => 'success'
-	        ), 300);
+            return response()->json(array(
+                'message' => 'Cortina predefinida no existe',
+                'status' => 'success'
+            ), 300);
         }
     }
 }
