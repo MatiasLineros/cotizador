@@ -8,7 +8,10 @@ use App\CortinaPredefinida;
 class CortinaPredefinidaController extends Controller
 {
     public function cortinasSegunRoller($roller_id){
-    	$cortinas = CortinaPredefinida::where('roller_id', $roller_id)->get();
+    	$cortinas = CortinaPredefinida::join('medidas', 'medidas.id', '=', 'cortinas_predefinidas.medida_id')
+    				->join('colores', 'colores.id', '=', 'cortinas_predefinidas.color_id')
+    				->where('cortinas_predefinidas.roller_id', $roller_id)->get();
+    				
     	if(!$cortinas->isEmpty()){
 	    	return response()->json(array(
 		        'cortinas' => $cortinas,
