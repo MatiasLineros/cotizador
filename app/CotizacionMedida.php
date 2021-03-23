@@ -15,4 +15,8 @@ class CotizacionMedida extends Model
     public function cortinaPredefinida(){
         return $this->belongsTo('App\CortinaPredefinida', 'cortina_predefinida_id');
     }
+
+    public function colorRollerPredefinido(){
+        return $this->belongsTo('App\ColorRollerPredefinido', 'color_roller_predefinido_id');
+    }
 }

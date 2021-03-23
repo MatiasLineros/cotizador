@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RollerColor extends Model
+class ColorRollerPredefinido extends Model
 {
-    protected $table = 'rollers_colores';
+    protected $table = 'colores_rollers_predefinidos';
 
     public function roller(){
         return $this->belongsTo('App\Roller', 'roller_id');

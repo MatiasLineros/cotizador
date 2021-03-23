@@ -15,8 +15,4 @@ class CortinaPredefinida extends Model
     public function medida(){
         return $this->belongsTo('App\Medida', 'medida_id');
     }
-
-    public function color(){
-        return $this->belongsTo('App\Color', 'color_id');
-    }
 }

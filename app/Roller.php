@@ -15,4 +15,8 @@ class Roller extends Model
     public function cortinasPredefinidas(){
         return $this->hasMany('App\CortinaPredefinida');
     }
+
+    public function colorRollerPredefinido(){
+        return $this->hasMany('App\ColorRollerPredefinido');
+    }
 }
