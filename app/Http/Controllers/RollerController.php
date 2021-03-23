@@ -8,7 +8,7 @@ use App\Roller;
 class RollerController extends Controller
 {
     public function show($id){
-    	$roller =  Roller::find($id)
+    	$roller =  Roller::find($id);
     	if(is_object($roller)){
     		return response()->json(array(
 	            'roller' => $roller,

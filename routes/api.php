@@ -24,4 +24,5 @@ Route::resource('/usuarios', 'UserController'); // php artisan route:list
 Route::resource('/clientes', 'ClienteController'); // php artisan route:list
 Route::resource('/rollers', 'RollerController'); // php artisan route:list
 Route::resource('/cotizacion-medida', 'CotizacionMedidaController'); // php artisan route:list
+Route::get('/cortina-predefinida-roller/{roller_id}', 'CortinaPredefinidaController@cortinasSegunRoller');
 Route::post('/login', 'UserController@login');
