@@ -330,8 +330,9 @@ CREATE TABLE clientes(
 CREATE TABLE cotizaciones(
 	id	int(255) auto_increment not null, 
 	margen_ganancia int(3),
-	tipo_cotizacion varchar(255),
+	precio_cortinas int(255),
 	precio_total int(255),
+	tipo_cotizacion varchar(255),
 	cliente_id int(255),
 	usuario_id int(255),
 	created_at datetime,
@@ -342,7 +343,8 @@ CREATE TABLE cotizaciones(
 )ENGINE=InnoDb;
 
 CREATE TABLE cotizaciones_especificas(
-	id	int(255) not null, 
+	id	int(255) auto_increment not null,
+	cotizacion_id int(255), 
 	alto varchar(255),
 	ancho varchar(255),
 	precio int(255),
@@ -350,18 +352,19 @@ CREATE TABLE cotizaciones_especificas(
 	created_at datetime,
 	updated_at datetime,
 	CONSTRAINT pk_cotizacion_especificas PRIMARY KEY(id),
-	CONSTRAINT fk_cotizacion_especificas_cotizacion FOREIGN KEY(id) REFERENCES cotizaciones(id),
+	CONSTRAINT fk_cotizacion_especificas_cotizacion FOREIGN KEY(cotizacion_id) REFERENCES cotizaciones(id),
 	CONSTRAINT fk_cotizacion_especificas_cortina FOREIGN KEY(cortina_id) REFERENCES cortinas(id)
 )ENGINE=InnoDb;
 
 CREATE TABLE cotizaciones_a_medida(
-	id	int(255) not null, 
+	id	int(255) auto_increment not null, 
+	cotizacion_id int(255),
 	cortina_predefinida_id int(255),
 	color_roller_predefinido_id int(255),
 	created_at datetime,
 	updated_at datetime,
 	CONSTRAINT pk_cotizacion_a_medida PRIMARY KEY(id),
-	CONSTRAINT fk_cotizacion_a_medida_cotizacion FOREIGN KEY(id) REFERENCES cotizaciones(id),
+	CONSTRAINT fk_cotizacion_a_medida_cotizacion FOREIGN KEY(cotizacion_id) REFERENCES cotizaciones(id),
 	CONSTRAINT fk_cotizacion_a_medida_cortina_predefinida FOREIGN KEY(cortina_predefinida_id) REFERENCES cortinas_predefinidas(id),
 	CONSTRAINT fk_cotizacion_a_medida_color_roller_predefinido FOREIGN KEY(color_roller_predefinido_id) REFERENCES colores_rollers_predefinidos(id)
 )ENGINE=InnoDb;

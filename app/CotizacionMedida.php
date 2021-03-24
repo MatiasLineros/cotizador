@@ -9,7 +9,7 @@ class CotizacionMedida extends Model
     protected $table = 'cotizaciones_a_medida';
 
     public function cotizacion(){
-        return $this->hasOne('App\Cotizacion', 'id'); 
+        return $this->belongsTo('App\Cotizacion', 'cotizacion_id'); 
     }
 
     public function cortinaPredefinida(){

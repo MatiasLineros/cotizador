@@ -9,7 +9,7 @@ class CotizacionEspecifica extends Model
     protected $table = 'cotizaciones_especificas';
 
     public function cotizacion(){
-        return $this->hasOne('App\Cotizacion', 'id'); 
+        return $this->belongsTo('App\Cotizacion', 'cotizacion_id'); 
     }
 
     public function cortina(){

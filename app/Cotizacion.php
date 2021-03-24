@@ -17,10 +17,10 @@ class Cotizacion extends Model
     }
 
     public function cotizacionEspecifica(){
-            return $this->hasOne('App\CotizacionEspecifica', 'id');
+        return $this->hasMany('App\CotizacionEspecifica');
     }
 
     public function cotizacionMedida(){
-            return $this->hasOne('App\CotizacionMedida', 'id');
+        return $this->hasMany('App\CotizacionMedida');
     }
 }
